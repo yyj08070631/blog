@@ -7,13 +7,15 @@
 
 # JavaScript
 
+[JavaScript不常用知识点复（yù）习（一）](https://github.com/yyj08070631/yyj/blob/master/JavaScript/JavaScript不常用知识点复（yù）习（一）.md)
+
 # 网络
-[什么是跨域，为什么浏览器会禁止跨域，及其引起的发散性学习](https://github.com/yyj08070631/yyj-blog/issues/3)
+[什么是跨域，为什么浏览器会禁止跨域，及其引起的发散性学习](https://github.com/yyj08070631/yyj/blob/master/网络/什么是跨域，为什么浏览器会禁止跨域，及其引起的发散性学习.md)
 
 # 面试
 [社招中级前端笔试面试题总结-答案及拓展](https://juejin.im/post/5b0562306fb9a07aaf3596c1)
 
 # 其他
-[最近工作遇到的问题及解决方案](https://github.com/yyj08070631/yyj/blob/master/%E5%85%B6%E4%BB%96/%E6%9C%80%E8%BF%91%E5%B7%A5%E4%BD%9C%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.md)
+[最近工作遇到的问题及解决方案](https://github.com/yyj08070631/yyj/blob/master/其他/最近工作遇到的问题及解决方案.md)
 
-[类直播应用1.0](https://github.com/yyj08070631/yyj/blob/master/%E5%85%B6%E4%BB%96/%E7%B1%BB%E7%9B%B4%E6%92%AD%E5%BA%94%E7%94%A81.0.md)
+[类直播应用踩坑](https://github.com/yyj08070631/yyj/blob/master/其他/类直播应用.md)
