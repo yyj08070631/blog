@@ -1,4 +1,5 @@
 module.exports = {
+  base: '/yyj/',
   title: '不肥的肥羊',
   description: 'Blog',
   themeConfig: {
@@ -6,8 +7,7 @@ module.exports = {
       {
         text: 'Languages',
         items: [
-          { text: 'Group1', items: [{ text: 'Chinese', link: '/language/chinese/' }, { text: 'Japanese', link: '/language/japanese/' }] },
-          { text: 'Group2', items: [{ text: 'Chinese', link: '/language/chinese/' }, { text: 'Japanese', link: '/language/japanese/' }] }
+          { text: 'Group1', items: [{ text: 'Chinese', link: '/language/chinese/' }, { text: 'Japanese', link: '/language/japanese/' }] }
         ]
       }
     ],
