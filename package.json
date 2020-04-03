@@ -1,0 +1,19 @@
+{
+  "name": "yyj",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yyj08070631/yyj.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yyj08070631/yyj/issues"
+  },
+  "homepage": "https://github.com/yyj08070631/yyj#readme"
+}

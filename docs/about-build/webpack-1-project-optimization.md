@@ -1,3 +1,5 @@
+# Vue1.0 + Webpack1 + Gulp项目升级构建方案的踩坑路
+
 最近半年在维护公司的一个管理后台项目，搭建之初的技术栈比较混乱，构建方案采用了`Gulp`中调用`Webpack`的方式，`Gulp`负责处理`.html`文件，`Webpack`负责加载`.vue`、`.js`等。而在这一套构建方案中，主要有这些问题：
 1. 没有实现JS压缩、CSS兼容等功能。
 2. 在开发模式下，保存代码，项目会进行完全的重新打包，持续构建速度不仅缓慢，还会产生缓存的现象（构建完成后刷新页面改动不生效）。
@@ -5,7 +7,7 @@
 
 因此，在熟悉这个项目之后，打算对其构建方案进行升级，主要为了解决上述的问题。
 
-## 1. 原有构建方案描述
+## 原有构建方案描述
 
 ### 原有构建速度
 
@@ -150,7 +152,7 @@ var devCompiler = webpack({
 })
 ```
 
-## 2. 将`Gulp`的功能移到`Webpack1`上执行
+## 将`Gulp`的功能移到`Webpack1`上执行
 
 ### 使用`html-webpack-plugin`插件构建项目的主`.html`文件
 
@@ -211,7 +213,7 @@ module.exports = {
 3. `Cannot resolve module 'fs' ...`：配置`config.node.fs = 'empty'`，为`Webpack`提供`node`原生模块，使其能加载到这个对象。
 4. 热重载只对`.js`和`.css`及`.vue`中的`<style>`内样式生效，对`.vue`文件中的`html`模板及`js`内容都不生效，会打印“模块代码已发生改变并重新编译，但热重载不生效，可能会启用全局刷新的策略”之类的信息，暂时没有解决，初步判断是低版本的`vue-hot-reload-api`对这些部分的处理有问题，有大神了解原理可以在评论区科普一哈=.=。
 
-## 3. 从`Webpack1`升级到`Webpack3`
+## 从`Webpack1`升级到`Webpack3`
 
 由于`Webpack2`与`Webpack3`几乎完全兼容，只是涉及到一些增量的功能，因此选择直接从`Webpack1`迁移到`Webapck3`，先在项目中安装`Webpack3`，然后根据`Webpack2`文档中《从`Webpack1`迁移》的章节，对配置项进行更改，参考的文档戳这个：https://www.html.cn/doc/webpack2/guides/migrating/
 
@@ -231,7 +233,7 @@ module.exports = {
 
 项目构建时间过长（第一次打包把自己吓了一跳...），只能继续寻求构建速度上的优化
 
-## 4. 在`Webpack3`下进行构建速度的优化
+## 在`Webpack3`下进行构建速度的优化
 
 ### 使用`webpack-jarvis`监测构建性能
 
@@ -290,7 +292,7 @@ module.exports = {
 
 ### 使用`html-webpack-plugin-for-multihtml`提升多入口项目重建速度
 
-重建一次竟然需要`30s`！各种搜索找到了`html-webpack-plugin`的一条`issue`，发现`html-webpack-plugin@2`在构建多入口应用时速度确实有明显变慢的情况，作者给出的解决方案是使用这个模块的一个分支项目（是由作者本人`fork`原项目并针对这个问题进行修复的项目）`html-webpack-plugin-for-multihtml`，用法与`html-webpack-plugin`完全相同，使用之后重建仅需`1s`左右。
+重建一次竟然需要`30s`！各种搜索找到了`html-webpack-plugin`的一条`issue`，发现`html-webpack-plugin@2`在构建多入口应用时速度确实有明显变慢的情况，原因是没有成功的对构建内容进行缓存，使每次重建都重新编译所有代码。作者给出的解决方案是使用这个模块的一个分支项目（是由作者本人`fork`原项目并针对这个问题进行修复的项目）`html-webpack-plugin-for-multihtml`，用法与`html-webpack-plugin`完全相同，使用之后重建仅需`1s`左右。
 
 做完这一步后，输出构建时间记录：
 
@@ -355,13 +357,169 @@ module.exports = {
 * `npm run build`：约`70s`
 * `npm run dev`：初次构建约`55s`，持续构建约`1s`
 
-## 5. 后记
+## 后记
 
-优化到这里就差不多结束，这次的优化为旧项目提供了新一代`spa`项目应有的一些功能，搭建了更现代的本地开发环境。由于本文篇幅有点太长，完整的配置就丢在另一篇文章里，下面丢链接：
+优化到这里就差不多结束，这次的优化为旧项目提供了新一代`spa`项目应有的一些功能，搭建了更现代的本地开发环境。下面贴上升级后的完整配置：
 
-https://github.com/yyj08070631/yyj/blob/master/Vue/Vue1.0+Webpack1+Gulp项目升级构建方案的踩坑路-完整配置.md
+```js
+// webpack.prod.conf.js
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const baseWebpackConfig = require('./webpack-base.conf')
+const utils = require('./utils')
 
-## 6. Q&A
+process.env.NODE_ENV = 'production'
+
+module.exports = merge(baseWebpackConfig, {
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
+    ...utils.htmlWebpackPluginConfig()
+  ]
+})
+
+// webpack.dev.conf.js
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const baseWebpackConfig = require('./webpack-base.conf')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const utils = require('./utils')
+const proxyDomain = '...'
+const host = '...'
+const port = ...
+
+process.env.NODE_ENV = 'development'
+
+module.exports = merge(baseWebpackConfig, {
+  devtool: 'cheap-module-eval-source-map',
+  devServer: {
+    publicPath: '/',
+    clientLogLevel: 'warning',
+    hot: true,
+    open: true,
+    inline: true,
+    compress: true,
+    host: host,
+    port: port,
+    proxy: { ... },
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/admin/, to: '...' }
+      ]
+    }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new FriendlyErrorsPlugin({
+      compilationSuccessInfo: {
+        messages: ['...']
+      },
+      onErrors: utils.createNotifierCallback()
+    }),
+    ...utils.htmlWebpackPluginConfig()
+  ]
+})
+
+// webpack.base.conf.js
+const webpack = require('webpack')
+const HappyPack = require('happypack')
+const path = require('path')
+const os = require('os')
+const utils = require('./utils')
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
+const resolve = dir => path.join(__dirname, '..', dir)
+
+module.exports = {
+  context: resolve('/'),
+  entry: { ... },
+  output: {
+    path: resolve('build'),
+    publicPath: '/',
+    filename: '...',
+    chunkFilename: '...'
+  },
+  externals: { ... },
+  resolve: {
+    modules: [resolve('...'), 'node_modules'],
+    extentions: ['...'],
+    alias: { ... }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        use: [
+          {
+            loader: 'vue-loader',
+            options: {
+              loaders: {
+                js: 'happypack/loader?id=js',
+                ...utils.cssLoader(),
+                cssSourceMap: process.env.NODE_ENV === 'development',
+                cacheBusting: true
+              }
+            }
+          }
+        ],
+        include: [resolve('...')]
+      },
+      {
+        test: /\.css$/,
+        use: ['vue-style-loader', 'css-loader'],
+        include: [resolve('...')]
+      },
+      {
+        test: /\.js$/,
+        use: 'happypack/loader?id=js',
+        include: [resolve('...')]
+      },
+    ]
+  },
+  plugins: [
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('../build/development/vendor-manifest.json')
+    }),
+    new webpack.DefinePlugin({ ... }),
+    new HappyPack({
+      id: 'js',
+      use: [{ loader: 'babel-loader', cacheDirectory: true }],
+      threadPool: happyThreadPool,
+      verbose: true
+    })
+  ],
+  node: {
+    fs: 'empty'
+  }
+}
+
+// webpack.dll.conf.js
+const webpack = require('webpack')
+const path = require('path')
+const resolve = dir => path.join(__dirname, '..', dir)
+
+module.exports = {
+  entry: {
+    vendor: [...]
+  },
+  output: {
+    path: resolve('build/development'),
+    filename: '[name].dll.js',
+    library: '[name]_library'
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.DllPlugin({
+      path: resolve('build/development/[name]-manifest.json'),
+      name: '[name]-library',
+      context: __dirname
+    })
+  ]
+}
+```
+
+## Q&A
 
 Q: 为什么不直接升级到`Webpack4`？
 
