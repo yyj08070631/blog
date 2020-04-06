@@ -11,6 +11,8 @@ deploy:
   local_dir: docs/.vuepress/dist
   github_token: $GITHUB_TOKEN
   keep_history: true
-  committer_from_gh: true
   on:
     branch: master
+env:
+  global:
+    - GITHUB_REF: github.com/yyj08070631/yyj.git
