@@ -6,7 +6,7 @@
 
 ## 猜想
 
-项目是基于 vue-cli2 搭建的，前人将 webpack 升级到了 webpack4。出于历史原因，公司项目的模块是根据模板（.html）划分的，因此项目中存在`超过 30 个模板`。这让我想起了之前在优化一个 webpack3 项目的时候，也遇到过类似的多模板热重载缓慢的情况，当时是使用 html-webpack-plugin-for-multihtml 库 [解决了问题](/about-build/webpack-1-project-optimization.html#使用html-webpack-plugin-for-multihtml提升多入口项目重建速度)，因此我想，这次会不会也是 html-webpack-plugin 的锅呢？
+项目是基于 vue-cli2 搭建的，前人将 webpack 升级到了 webpack4。出于历史原因，公司项目的模块是根据模板（.html）划分的，因此项目中存在`超过 30 个模板`。这让我想起了之前在优化一个 webpack3 项目的时候，也遇到过类似的多模板热重载缓慢的情况，当时是使用 html-webpack-plugin-for-multihtml 库 [解决了问题](/build/webpack-1-project-optimization.html#使用html-webpack-plugin-for-multihtml提升多入口项目重建速度)，因此我想，这次会不会也是 html-webpack-plugin 的锅呢？
 
 ## 升级 html-webpack-plugin 问题解决
 
