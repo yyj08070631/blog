@@ -4,7 +4,7 @@ heroImage: /wallhaven-518964.jpg
 heroText: 肥羊的博客
 tagline: 构建知识体系
 actionText: 开始阅读 →
-actionLink: /build/html-webpack-plugin-4.x-optimization.md
+actionLink: /network/001.md
 features: null
 # - title: 简洁至上
 #   details: 以 Markdown 为中心的项目结构，以最少的配置帮助你专注于写作。
