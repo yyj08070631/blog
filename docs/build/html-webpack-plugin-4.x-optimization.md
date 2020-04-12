@@ -18,17 +18,17 @@
 
 [cpuprofile-webpack-plugin](npmjs.com/package/cpuprofile-webpack-plugin) 是一个图形化的 webpack 构建性能分析工具，它会统计构建过程中每个插件运行的时间，还会生成整个构建过程的[火焰图](https://github.com/brendangregg/FlameGraph)，如下图，它记录了我的项目使用 html-webpack-plugin@3.2.0 时一次热重载的性能分析：
 
-![cpuprofile-webpack-plugin 分析结果](https://user-gold-cdn.xitu.io/2019/10/11/16db9f51300d073d?w=1920&h=938&f=png&s=298821)
+![cpuprofile-webpack-plugin 分析结果](../image/00001.jpg)
 > 图：cpuprofile-webpack-plugin 分析结果
 
 我们发现在整个 15.94s 的热重载过程中，html-webpack-plugin 的运行时间占据了 `13.51s`，可以说几乎全部时间都用在了这上面，这个图也验证了我的猜想。接下来，我们通过火焰图进一步分析，首先找一个运行时间较长，比较有代表性的 html-webpack-plugin 执行过程：
 
-![一次时间较长的 html-webpack-plugin 运行](https://user-gold-cdn.xitu.io/2019/10/11/16db9fa2efb02b2d?w=1000&h=242&f=png&s=141653)
+![一次时间较长的 html-webpack-plugin 运行](../image/00002.jpg)
 > 图：一次时间较长的 html-webpack-plugin 运行
 
 点击进去，查看更详细的调用栈分析：
 
-![html-webpack-plugin 详细的调用栈分析](https://user-gold-cdn.xitu.io/2019/10/11/16db9fc2b8dc19d2?w=1104&h=289&f=png&s=116537)
+![html-webpack-plugin 详细的调用栈分析](../image/00003.jpg)
 > 图：html-webpack-plugin 详细的调用栈分析
 
 发现全部耗时集中在 html-webpack-plugin/index.js -> templateParametersGenerator -> toJson 函数上。
@@ -37,22 +37,22 @@
 
 首先查看了最新版（4.0.0-beta.8）中 templateParametersGenerator 方法的源码，可以看出它是用来生成 templateParameters 的默认配置的，而在这个版本中它并`没有调用 toJson 方法`：
 
-![4.0.0-beta.8 templateParametersGenerator 的调用](https://user-gold-cdn.xitu.io/2019/10/11/16dba046399214ad?w=1000&h=443&f=png&s=39288)
+![4.0.0-beta.8 templateParametersGenerator 的调用](../image/00004.jpg)
 > 图：4.0.0-beta.8 templateParametersGenerator 的调用
 
-![4.0.0-beta.8 templateParametersGenerator 的定义](https://user-gold-cdn.xitu.io/2019/10/11/16dba05bf5cf49b7?w=999&h=637&f=png&s=64550)
+![4.0.0-beta.8 templateParametersGenerator 的定义](../image/00005.jpg)
 > 图：4.0.0-beta.8 templateParametersGenerator 的定义
 
 然后回溯 3.2.0 版本之前的提交，终于见到了它的调用，webpack 文档中解释 compilation.getStats().toJson() 是用来生成编译过程的性能分析 json 文件的方法，那么罪魁祸首就是它了。
 
-![3.2.0 templateParametersGenerator 的定义](https://user-gold-cdn.xitu.io/2019/10/11/16dba1e46f95607c?w=1000&h=324&f=png&s=29523)
+![3.2.0 templateParametersGenerator 的定义](../image/00006.jpg)
 > 图：3.2.0 templateParametersGenerator 的定义
 
 ## 查找修复这个问题的 commit
 
 后来我尝试了把 html-webpack-plugin 的版本回退到 4.x 的第一个版本 4.0.0-alpha，发现热重载性能依然是没问题的，因此提交的定位就在 3.2.0 到 4.0.0-alpha 之间，经过一番查找，终于找到了这个 fix，`出于性能原因移除 compilation.getStats()`：
 
-![fix: Remove compilation.getStats() call for performance reasons](https://user-gold-cdn.xitu.io/2019/10/11/16dba2a456d26068?w=1891&h=472&f=png&s=68781)
+![fix: Remove compilation.getStats() call for performance reasons](../image/00007.jpg)
 > 图：fix: Remove compilation.getStats() call for performance reasons
 
 ## 后记
@@ -63,14 +63,14 @@
 
 由于我的代码里踩了这个坑，所以给大家讲一下，html-webpack-plugin 4.x 对钩子函数进行了`重构`，注意是重构，不是更新，也就是说，虽然名字改了，但是所有功能都是没有变化且一一对应的，作者的 commit 里使用的 badge 也是 `refactor`：
 
-![钩子函数重构的 commit](https://user-gold-cdn.xitu.io/2019/10/11/16dba3a6c29b23dc?w=1000&h=193&f=png&s=29547)
+![钩子函数重构的 commit](../image/00008.jpg)
 > 图：钩子函数重构的 commit
 
-![3.x 钩子函数文档](https://user-gold-cdn.xitu.io/2019/10/8/16dab7d60edee4a2?w=935&h=404&f=png&s=34012)
+![3.x 钩子函数文档](../image/00009.jpg)
 > 图：3.x 钩子函数文档
 
-![4.x 钩子函数文档](https://user-gold-cdn.xitu.io/2019/10/8/16dab819add657e0?w=900&h=773&f=png&s=62861)
+![4.x 钩子函数文档](../image/00010.jpg)
 > 图：4.x 钩子函数文档
 
-![4.x 钩子函数文档](https://user-gold-cdn.xitu.io/2019/10/8/16dab8208657e6bc?w=900&h=614&f=png&s=46913)
+![4.x 钩子函数文档](../image/00011.jpg)
 > 图：4.x 钩子函数文档
