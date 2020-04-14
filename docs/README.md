@@ -1,7 +1,7 @@
 ---
 home: true
 heroImage: /wallhaven-518964.jpg
-heroText: 肥羊的博客
+heroText: 不肥的肥羊的博客
 tagline: 构建知识体系
 actionText: 开始阅读 →
 actionLink: /network/001.md
