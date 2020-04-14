@@ -62,7 +62,7 @@ module.exports = {
         children: [
           { title: '001 HTTP 状态码', path: '/network/001.md' },
           { title: '002 HTTP 请求方法', path: '/network/002.md' },
-          { title: '003', path: '/network/003.md' },
+          { title: '003 HTTP 头部：Accept 与 Content', path: '/network/003.md' },
           { title: '004', path: '/network/004.md' },
           { title: '005', path: '/network/005.md' },
           { title: '006', path: '/network/006.md' },
