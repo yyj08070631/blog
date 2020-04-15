@@ -64,7 +64,7 @@ module.exports = {
           { title: '002 HTTP 请求方法', path: '/network/002.md' },
           { title: '003 HTTP 头部：内容协商', path: '/network/003.md' },
           { title: '004 HTTP 头部：缓存策略', path: '/network/004.md' },
-          { title: '005', path: '/network/005.md' },
+          { title: '005 HTTP 其它常用头部字段', path: '/network/005.md' },
           { title: '006', path: '/network/006.md' },
           { title: '007', path: '/network/007.md' },
           { title: '008', path: '/network/008.md' },
