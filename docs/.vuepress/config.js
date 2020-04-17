@@ -1,6 +1,6 @@
 module.exports = {
   base: '/yyj/',
-  title: '不肥的肥羊',
+  title: '不肥的肥羊的博客',
   description: 'Blog',
   themeConfig: {
     // 假定是 GitHub. 同时也可以是一个完整的 GitLab URL
@@ -16,6 +16,7 @@ module.exports = {
     editLinks: true,
     // 默认为 "Edit this page"
     // editLinkText: '帮助我们改善此页面！',
+    lastUpdated: 'Last Updated',
     nav: [
       { text: '首页', link: '/' }
     ],
@@ -66,9 +67,9 @@ module.exports = {
           { title: '004 HTTP 头部：缓存策略', path: '/network/004.md' },
           { title: '005 HTTP 其它常用头部字段', path: '/network/005.md' },
           { title: '006 HTTPS', path: '/network/006.md' },
-          { title: '007 TLS CipherSuite', path: '/network/007.md' },
-          { title: '008', path: '/network/008.md' },
-          { title: '009', path: '/network/009.md' },
+          { title: '007 TLS Record Protocol', path: '/network/007.md' },
+          { title: '008 TLS Handshake Protocol', path: '/network/008.md' },
+          { title: '009 TLS 1.3 的改进', path: '/network/009.md' },
           { title: '010', path: '/network/010.md' },
           { title: '011', path: '/network/011.md' }
         ]
