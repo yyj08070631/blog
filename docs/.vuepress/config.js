@@ -69,7 +69,7 @@ module.exports = {
           { title: '006 HTTPS', path: '/network/006.md' },
           { title: '007 TLS 记录协议', path: '/network/007.md' },
           { title: '008 TLS 握手协议', path: '/network/008.md' },
-          { title: '009 TLS 1.3 的改进', path: '/network/009.md' },
+          { title: '009 HTTP/2 的改进', path: '/network/009.md' },
           { title: '010', path: '/network/010.md' },
           { title: '011', path: '/network/011.md' }
         ]
