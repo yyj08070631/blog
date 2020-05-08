@@ -36,7 +36,7 @@ module.exports = {
       {
         title: 'JavaScript',
         children: [
-          // { title: '从零开始实现一个 HTTP 服务器', path: '/protocol/build-http-server.md' }
+          { title: '001 关于 JavaScript this 指向', path: '/js/001.md' }
         ]
       },
       {
