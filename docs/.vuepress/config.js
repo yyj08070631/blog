@@ -83,7 +83,7 @@ module.exports = {
       {
         title: 'Web 安全',
         children: [
-          // { title: '从零开始实现一个 HTTP 服务器', path: '/protocol/build-http-server.md' }
+          { title: '001 XSS 攻击', path: '/security/001.md' }
         ]
       },
       {
