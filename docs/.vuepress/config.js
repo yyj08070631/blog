@@ -1,10 +1,10 @@
 module.exports = {
-  base: '/yyj/',
+  base: '/blog/',
   title: '不肥的肥羊的博客',
   description: 'Blog',
   themeConfig: {
     // 假定是 GitHub. 同时也可以是一个完整的 GitLab URL
-    repo: 'yyj08070631/yyj',
+    repo: 'yyj08070631/blog',
     // 自定义仓库链接文字。默认从 `themeConfig.repo` 中自动推断为
     // "GitHub"/"GitLab"/"Bitbucket" 其中之一，或是 "Source"。
     repoLabel: '查看源码',

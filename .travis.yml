@@ -15,4 +15,4 @@ deploy:
     branch: master
 env:
   global:
-    - GITHUB_REF: github.com/yyj08070631/yyj.git
+    - GITHUB_REF: github.com/yyj08070631/blog.git
