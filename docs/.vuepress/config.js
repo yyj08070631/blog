@@ -1,3 +1,5 @@
+const resolve = require('path').resolve
+
 module.exports = {
   base: '/blog/',
   title: '不肥的肥羊的博客',
@@ -17,6 +19,7 @@ module.exports = {
     // 默认为 "Edit this page"
     // editLinkText: '帮助我们改善此页面！',
     lastUpdated: 'Last Updated',
+    enhanceAppFiles: resolve(__dirname, 'enhanceApp.js'),
     nav: [
       { text: '首页', link: '/' }
     ],
