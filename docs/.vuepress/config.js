@@ -39,7 +39,10 @@ module.exports = {
       {
         title: 'JavaScript',
         children: [
-          { title: '001 关于 JavaScript this 指向', path: '/js/001.md' }
+          { title: '001 关于 JavaScript this 指向', path: '/js/001.md' },
+          { title: '002 模拟实现 call 和 apply', path: '/js/002.md' },
+          { title: '003 模拟实现 bind', path: '/js/003.md' },
+          { title: '004 模拟实现 new', path: '/js/004.md' },
         ]
       },
       {
