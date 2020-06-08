@@ -4,6 +4,17 @@ module.exports = {
   base: '/blog/',
   title: '不肥的肥羊的博客',
   description: 'Blog',
+  head: [
+    ['script', {}, `
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?34ffe82902ef2e02b9f8f8642ace8775";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    `]
+  ],
   themeConfig: {
     // 假定是 GitHub. 同时也可以是一个完整的 GitLab URL
     repo: 'yyj08070631/blog',
