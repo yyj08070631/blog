@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>003 模拟实现 bind | 不肥的肥羊的博客</title>
+    <meta name="description" content="Blog">
+    <meta name="generator" content="VuePress 1.4.0">
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?34ffe82902ef2e02b9f8f8642ace8775";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.de52748e.css" as="style"><link rel="preload" href="/blog/assets/js/app.62a48a99.js" as="script"><link rel="preload" href="/blog/assets/js/2.de018582.js" as="script"><link rel="preload" href="/blog/assets/js/15.c438921b.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.34f50a32.js"><link rel="prefetch" href="/blog/assets/js/11.83174c0c.js"><link rel="prefetch" href="/blog/assets/js/12.01d0e66a.js"><link rel="prefetch" href="/blog/assets/js/13.9f1dca7d.js"><link rel="prefetch" href="/blog/assets/js/14.59d3abd5.js"><link rel="prefetch" href="/blog/assets/js/16.146f5974.js"><link rel="prefetch" href="/blog/assets/js/17.fb5cb070.js"><link rel="prefetch" href="/blog/assets/js/18.dfae62b0.js"><link rel="prefetch" href="/blog/assets/js/19.7cd5580f.js"><link rel="prefetch" href="/blog/assets/js/20.544bbe10.js"><link rel="prefetch" href="/blog/assets/js/21.fe60465c.js"><link rel="prefetch" href="/blog/assets/js/22.f346de1c.js"><link rel="prefetch" href="/blog/assets/js/23.d6ef8734.js"><link rel="prefetch" href="/blog/assets/js/24.156f7dad.js"><link rel="prefetch" href="/blog/assets/js/3.f6fda1f0.js"><link rel="prefetch" href="/blog/assets/js/4.5c1e4e4d.js"><link rel="prefetch" href="/blog/assets/js/5.8f0aa699.js"><link rel="prefetch" href="/blog/assets/js/6.98a9e9e2.js"><link rel="prefetch" href="/blog/assets/js/7.830922ff.js"><link rel="prefetch" href="/blog/assets/js/8.8d1f4131.js"><link rel="prefetch" href="/blog/assets/js/9.a523d9cd.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.de52748e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><!----> <span class="site-name">不肥的肥羊的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link">
+  首页
+</a></div> <a href="https://github.com/yyj08070631/blog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link">
+  首页
+</a></div> <a href="https://github.com/yyj08070631/blog" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>HTML</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>CSS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JavaScript</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/js/001.html" class="sidebar-link">001 关于 JavaScript this 指向</a></li><li><a href="/blog/js/002.html" class="sidebar-link">002 模拟实现 call 和 apply</a></li><li><a href="/blog/js/003.html" class="active sidebar-link">003 模拟实现 bind</a></li><li><a href="/blog/js/004.html" class="sidebar-link">004 模拟实现 new</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TypeScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>构建生态</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>计算机网络</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>浏览器原理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Web 安全</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>设计模式</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>UI/UX</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>前端工程化</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_003-模拟实现-bind"><a href="#_003-模拟实现-bind" class="header-anchor">#</a> 003 模拟实现 bind</h1> <p><code>bind</code> 的模拟实现主要需要支持以下几个功能：</p> <ol><li>改变 <code>this</code> 指向（新生成的函数可能存在返回值）</li> <li>实参应为调用 <code>bind</code> 传入的参数与调用绑定后函数传入的参数列表拼接的结果</li> <li>使用 <code>bind</code> 绑定后的函数可以作为构造函数，使用 <code>new</code> 标识符进行初始化，此时相当于使用原函数作为构造函数</li></ol> <p>下面结合代码来说明实现的细节。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 名词说明</span>
+<span class="token comment">// 原函数：调用 bind 的函数</span>
+<span class="token comment">// 新函数：调用 bind 生成的函数</span>
+<span class="token class-name">Function</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">bind2</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 如果调用者不是一个函数，抛出错误</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> <span class="token keyword">this</span> <span class="token operator">!==</span> <span class="token string">&quot;function&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">&quot;Function.prototype.bind - what is trying to be bound is not callable&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 此处的 this 指向原函数，记录之</span>
+  <span class="token keyword">var</span> self <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+  <span class="token comment">// 对应 2：获取调用 bind 时传入的参数列表，返回参数列表数组</span>
+  <span class="token comment">// slice(1) 是因为 bind 第一个参数是需要指定的上下文，后面的参数才是需要带给新函数的参数</span>
+  <span class="token keyword">var</span> args <span class="token operator">=</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arguments<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 对应 3：声明一个中转函数来中转从原型上继承的属性和方法</span>
+  <span class="token keyword">var</span> <span class="token function-variable function">fNOP</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 新函数</span>
+  <span class="token keyword">var</span> <span class="token function-variable function">fBound</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 对应 2：获取调用新函数时传入的参数列表，返回参数列表数组</span>
+    <span class="token keyword">var</span> bindArgs <span class="token operator">=</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 对应 1：self 指向原函数，因此对 self 使用 apply 调用就可以改变 this 指向</span>
+    <span class="token comment">// 使用 return 的原因是原函数可能有返回值</span>
+    <span class="token comment">// this instanceof fNOP ? this：三目运算的 if 部分指向使用 new 创建实例对象的情况，这种情况下 this 是必须指向实例对象的，而实例对象的构造函数又是继承 fNOP 得来，那么 this instanceof fNOP 也自然会为 true，apply 的第一个参数就会传入 this，即不改变 this 指向</span>
+    <span class="token comment">// context：三目运算的 else 位指直接调用这个函数的情况，此时需要按照 bind 绑定的结果改变 this 指向，因此 apply 的第一个参数应传入 bind 指定的 this，即 context</span>
+    <span class="token comment">// args.concat(bindArgs)：新函数最终的实参，是由调用 bind 时传入的实参与调用新函数时传入的实参拼接而成</span>
+    <span class="token keyword">return</span> <span class="token function">self</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token keyword">instanceof</span> <span class="token class-name">fNOP</span> <span class="token operator">?</span> <span class="token keyword">this</span> <span class="token operator">:</span> context<span class="token punctuation">,</span> args<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>bindArgs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 对应 3：将原函数的 prototype 放到中转函数的 prototype 中</span>
+  fNOP<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>prototype<span class="token punctuation">;</span>
+  <span class="token comment">// 对应 3：将中转函数实例化，赋值给新函数的 prototype</span>
+  <span class="token comment">// 这一步实现新函数继承原函数，使得对新函数使用 new 标识符实例化时，可以继承原函数的属性和方法</span>
+  fBound<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">fNOP</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 返回新函数</span>
+  <span class="token keyword">return</span> fBound<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><div class="custom-block tip"><p class="custom-block-title">部分参考来源</p> <p><a href="https://github.com/mqyqingfeng/Blog/issues/12" target="_blank" rel="noopener noreferrer">JavaScript 深入之 bind 的模拟实现<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/yyj08070631/blog/edit/master/docs/js/003.md" target="_blank" rel="noopener noreferrer">Edit this page</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">6/30/2020, 5:36:09 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/blog/js/002.html" class="prev">
+        002 模拟实现 call 和 apply
+      </a></span> <span class="next"><a href="/blog/js/004.html">
+        004 模拟实现 new
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/blog/assets/js/app.62a48a99.js" defer></script><script src="/blog/assets/js/2.de018582.js" defer></script><script src="/blog/assets/js/15.c438921b.js" defer></script>
+  </body>
+</html>
